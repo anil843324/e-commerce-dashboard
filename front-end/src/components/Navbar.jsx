@@ -32,6 +32,9 @@ const Navbar = () => {
            <Link to={"/profile"}>
            <li>Profile</li>
            </Link>
+           <Link to={"/signup"}>
+           <li>SignUP</li>
+           </Link>
             
           </ul>
         </div>
@@ -71,6 +74,10 @@ const Navbar = () => {
            <Link to={"/profile"}>
            <li>Profile</li>
            </Link>
+           <Link to={"/signup"}>
+           <li>SignUP</li>
+           </Link>
+           
             </ul>
           </div>
         ) : (
