@@ -1,48 +1,33 @@
 import React, { useState } from "react";
-import { useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 const SignUp = () => {
- 
-   const navigate=useNavigate()
-   const [fullName,setFullName]=useState("")
+  const navigate = useNavigate();
+  const [fullName, setFullName] = useState("");
 
-   const [email,setEmail]=useState("")
+  const [email, setEmail] = useState("");
 
-   const [password,setPassword]=useState("")
+  const [password, setPassword] = useState("");
 
-    const collectData= async()=>{
+  const collectData = async () => {
+    let result = await fetch("http://localhost:8000/register", {
+      method: "POST",
+      body: JSON.stringify({ fullName, email, password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-         let result= await fetch('http://localhost:8000/register',{
-          method:"POST",
-          body:JSON.stringify({fullName,email,password}),
-          headers:{
-            'Content-Type':'application/json'
-          }
-         });
-         
-          result= await result.json();
-          console.log(result)
+    result = await result.json();
+    console.log(result);
 
-         if(result){
-           navigate('/')
-         }
-
-
-
-        
-
-
-
-
-
-
-
+    if (result) {
+       alert("hii")
+      navigate("/");
     }
-
-
+  };
 
   return (
     <div>
-
       <div className="bg-grey-lighter min-h-screen flex flex-col">
         <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
           <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
@@ -52,7 +37,7 @@ const SignUp = () => {
               className="block border border-grey-light w-full p-3 rounded mb-4"
               name="fullname"
               value={fullName}
-              onChange={ (e)=> setFullName(e.target.value) }
+              onChange={(e) => setFullName(e.target.value)}
               placeholder="Full Name"
             />
 
@@ -61,7 +46,7 @@ const SignUp = () => {
               className="block border border-grey-light w-full p-3 rounded mb-4"
               name="email"
               placeholder="Email"
-              onChange={ (e)=> setEmail(e.target.value) }
+              onChange={(e) => setEmail(e.target.value)}
               value={email}
             />
 
@@ -70,12 +55,12 @@ const SignUp = () => {
               className="block border border-grey-light w-full p-3 rounded mb-4"
               name="password"
               placeholder="Password"
-              onChange={ (e)=> setPassword(e.target.value) }
+              onChange={(e) => setPassword(e.target.value)}
               value={password}
             />
             <button
               type="submit"
-               onClick={ collectData}
+              onClick={collectData}
               className="w-full text-center py-3 rounded bg-green-600 text-white hover:bg-green-dark focus:outline-none my-1"
             >
               Create Account
