@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {  useNavigate } from "react-router-dom";
 const SignUp = () => {
   const navigate = useNavigate();
-  const [fullName, setFullName] = useState("");
+  const [name, setName] = useState("");
 
   const [email, setEmail] = useState("");
 
@@ -25,7 +25,7 @@ const SignUp = () => {
 
   const collectData = async () => {
 
-     if(!email || !password || !fullName){
+     if(!email || !password || !name){
          alert("please fill the data")
      }else{
 
@@ -33,7 +33,7 @@ const SignUp = () => {
 
     let result = await fetch("http://localhost:8000/register", {
       method: "POST",
-      body: JSON.stringify({ fullName, email, password }),
+      body: JSON.stringify({ name, email, password }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -59,8 +59,8 @@ const SignUp = () => {
               className="block border border-grey-light w-full p-3 rounded mb-4"
               name="fullname"
             
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               placeholder="Full Name"
             />
 
