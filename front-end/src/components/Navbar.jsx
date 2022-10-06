@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   const [toggle, setToggle] = useState(true);
 
+   const auth=localStorage.getItem("user")
+
   const handleToggle = () => {
     setToggle(!toggle);
   };
@@ -26,15 +28,14 @@ const Navbar = () => {
            <Link to={"/update"}>
            <li>Update Product</li>
            </Link>
-           <Link to={"/logout"}>
-           <li>Logout</li>
-           </Link>
+          
            <Link to={"/profile"}>
            <li>Profile</li>
            </Link>
-           <Link to={"/signup"}>
-           <li>SignUP</li>
-           </Link>
+          
+           {
+             auth ?  <Link to={"/logout"}> <li>Logout</li></Link> : <Link to={"/signup"}> <li>SignUP</li> </Link>
+           }
             
           </ul>
         </div>
