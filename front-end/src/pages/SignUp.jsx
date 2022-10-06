@@ -9,6 +9,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
 
 
+
    useEffect(() => {
    
      const  auth=localStorage.getItem("user");
@@ -23,6 +24,13 @@ const SignUp = () => {
 
 
   const collectData = async () => {
+
+     if(!email || !password || !fullName){
+         alert("please fill the data")
+     }else{
+
+     
+
     let result = await fetch("http://localhost:8000/register", {
       method: "POST",
       body: JSON.stringify({ fullName, email, password }),
@@ -37,6 +45,7 @@ const SignUp = () => {
     if (result) {
       navigate("/");
     }
+  }
   };
 
   return (
@@ -49,6 +58,7 @@ const SignUp = () => {
               type="text"
               className="block border border-grey-light w-full p-3 rounded mb-4"
               name="fullname"
+            
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="Full Name"
@@ -58,6 +68,7 @@ const SignUp = () => {
               type="text"
               className="block border border-grey-light w-full p-3 rounded mb-4"
               name="email"
+              
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
@@ -67,6 +78,7 @@ const SignUp = () => {
               type="password"
               className="block border border-grey-light w-full p-3 rounded mb-4"
               name="password"
+              
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
               value={password}

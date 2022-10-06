@@ -1,15 +1,25 @@
 import React, { useState } from "react";
 
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate } from "react-router-dom";
 const Navbar = () => {
   const [toggle, setToggle] = useState(true);
 
    const auth=localStorage.getItem("user")
 
+    const navigate=useNavigate();
+
   const handleToggle = () => {
     setToggle(!toggle);
   };
+
+
+  const logOut=()=>{
+
+     localStorage.clear();
+   navigate("/signup")
+
+  }
 
   return (
     <div className="w-full  h-[60px] bg-black">
@@ -34,7 +44,7 @@ const Navbar = () => {
            </Link>
           
            {
-             auth ?  <Link to={"/logout"}> <li>Logout</li></Link> : <Link to={"/signup"}> <li>SignUP</li> </Link>
+             auth ?  <Link onClick={ logOut} to={"/signup"}> <li>Logout</li></Link> : <Link to={"/signup"}> <li>SignUP</li> </Link>
            }
             
           </ul>
@@ -69,15 +79,13 @@ const Navbar = () => {
            <Link to={"/update"}>
            <li>Update Product</li>
            </Link>
-           <Link to={"/logout"}>
-           <li>Logout</li>
-           </Link>
            <Link to={"/profile"}>
            <li>Profile</li>
            </Link>
-           <Link to={"/signup"}>
-           <li>SignUP</li>
-           </Link>
+          
+           {
+             auth ?  <Link onClick={ logOut} to={"/signup"}> <li>Logout</li></Link> : <Link to={"/signup"}> <li>SignUP</li> </Link>
+           }
            
             </ul>
           </div>
