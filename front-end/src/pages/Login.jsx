@@ -1,51 +1,49 @@
-import React, { useEffect, useState } from "react";
-import {  useNavigate } from "react-router-dom";
-const SignUp = () => {
+import React, {  useEffect, useState } from "react";
+import {   useNavigate } from "react-router-dom";
+const Login = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-
+ 
   const [email, setEmail] = useState("");
 
   const [password, setPassword] = useState("");
 
-
-
-   useEffect(() => {
-   
-     const  auth=localStorage.getItem("user");
-     if(auth){
-      navigate("/")
-     }
-
-   }, [])
-   
-
-
-
-
-  const collectData = async () => {
-
-     if(!email || !password || !name){
-         alert("please fill the data")
-     }else{
-
-     
-
-    let result = await fetch("http://localhost:8000/register", {
-      method: "POST",
-      body: JSON.stringify({ name, email, password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    result = await result.json();
   
- localStorage.setItem("user", JSON.stringify(result) )
-    if (result) {
-      navigate("/");
+  useEffect(() => {
+   
+    const  auth=localStorage.getItem("user");
+    if(auth){
+     navigate("/")
     }
-  }
+
+  }, [])
+
+
+
+
+  const handleLogin =  async () => {
+
+       
+      let result= await fetch('http://localhost:8000/login',{
+
+       method:"POST",
+       body: JSON.stringify({email,password}),
+       headers:{
+         'Content-Type':'application/json'
+       }
+      })
+
+       result = await  result.json();
+
+       if(result.name){
+
+          localStorage.setItem("user" , JSON.stringify(result))
+          navigate("/")
+       }else{
+          alert("Please enter valid details")
+       }
+
+
+    
   };
 
   return (
@@ -53,17 +51,8 @@ const SignUp = () => {
       <div className="bg-grey-lighter min-h-screen flex flex-col">
         <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
           <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
-            <h1 className="mb-8 text-3xl text-center">Register</h1>
-            <input
-              type="text"
-              className="block border border-grey-light w-full p-3 rounded mb-4"
-              name="fullname"
-            
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Full Name"
-            />
-
+            <h1 className="mb-8 text-3xl text-center">LogIn</h1>
+          
             <input
               type="text"
               className="block border border-grey-light w-full p-3 rounded mb-4"
@@ -85,14 +74,14 @@ const SignUp = () => {
             />
             <button
               type="submit"
-              onClick={collectData}
+              onClick={handleLogin}
               className="w-full text-center py-3 rounded bg-green-600 text-white hover:bg-green-dark focus:outline-none my-1"
             >
-              Create Account
+              login
             </button>
 
             <div className="text-center text-sm text-grey-dark mt-4">
-              By signing up, you agree to the
+              By loging up, you agree to the
               <a
                 className="no-underline border-b border-gray-400 text-grey-dark"
                 href="/"
@@ -110,12 +99,12 @@ const SignUp = () => {
           </div>
 
           <div className="text-grey-dark mt-6">
-            Already have an account?
+            If You don't have an account?
             <a
               className="no-underline border-b border-blue text-blue-400"
-              href="/login"
+              href="/signup"
             >
-              Log in
+              Sign Up
             </a>
             .
           </div>
@@ -125,4 +114,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;

@@ -7,10 +7,11 @@ import Products from './pages/Products';
 import AddProduct from './pages/AddProduct';
 import UpdateProduct from './pages/UpdateProduct';
 import Profile from './pages/Profile';
-import Logout from './pages/Logout';
+
 import Footer from './components/Footer';
 import SignUp from "./pages/SignUp"
 import PrivateComponent from './components/PrivateComponent';
+import Login from './pages/Login';
 
 function App() {
   return (
@@ -24,12 +25,12 @@ function App() {
         <Route path='/' element={ <Products/>}/>
         <Route path='/add' element={ <AddProduct/>}/>
         <Route path='/update' element={ <UpdateProduct/>}/>
-        <Route path='/logout' element={ <Logout/>}/>
         <Route path='/profile' element={ <Profile/>}/>
-        
         </Route>
 
         <Route path='/signup' element={ <SignUp/>}/>
+        
+        <Route path='/login' element={ <Login/>}/>
 
      </Routes>
       <Footer/>
