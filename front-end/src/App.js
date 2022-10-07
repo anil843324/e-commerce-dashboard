@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import SignUp from "./pages/SignUp"
 import PrivateComponent from './components/PrivateComponent';
 import Login from './pages/Login';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path='/add' element={ <AddProduct/>}/>
         <Route path='/update' element={ <UpdateProduct/>}/>
         <Route path='/profile' element={ <Profile/>}/>
+        <Route path='*' element={ <NotFound/>}/>
         </Route>
 
         <Route path='/signup' element={ <SignUp/>}/>
