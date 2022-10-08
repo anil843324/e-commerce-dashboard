@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import { json, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Navbar = () => {
   const [toggle, setToggle] = useState(true);
 
@@ -22,8 +22,11 @@ const Navbar = () => {
     <div className="w-full  h-[60px] bg-black">
       <div className="max-w-[1240px] mx-auto px-4 flex justify-between items-center h-full">
         <div>
-
-           <img  className=" w-[50px] h-[50px] rounded-full" src="https://media.istockphoto.com/vectors/online-shop-logo-design-template-vector-id1150644423?k=20&m=1150644423&s=612x612&w=0&h=xKnuj3AhBbMAjxnJdT6Mh7o4BDIGaEwyol33tRwG7mU=" alt="logo" />
+          <img
+            className=" w-[50px] h-[50px] rounded-full"
+            src="https://media.istockphoto.com/vectors/online-shop-logo-design-template-vector-id1150644423?k=20&m=1150644423&s=612x612&w=0&h=xKnuj3AhBbMAjxnJdT6Mh7o4BDIGaEwyol33tRwG7mU="
+            alt="logo"
+          />
           {/* <h1 className="text-[#00d8ff] ">E-Dashboard</h1> */}
         </div>
         <div className=" hidden md:flex">
@@ -36,9 +39,6 @@ const Navbar = () => {
                 <Link to={"/add"}>
                   <li>Add Product</li>
                 </Link>
-                <Link to={"/update"}>
-                  <li>Update Product</li>
-                </Link>
                 <Link to={"/profile"}>
                   <li>Profile</li>
                 </Link>{" "}
@@ -49,7 +49,7 @@ const Navbar = () => {
 
             {auth ? (
               <Link onClick={logOut} to={"/signup"}>
-                <li>Logout ({  JSON.parse(auth).name}) </li>
+                <li>Logout ({JSON.parse(auth).name}) </li>
               </Link>
             ) : (
               <>
@@ -92,9 +92,6 @@ const Navbar = () => {
                   <Link to={"/add"}>
                     <li>Add Product</li>
                   </Link>
-                  <Link to={"/update"}>
-                    <li>Update Product</li>
-                  </Link>
                   <Link to={"/profile"}>
                     <li>Profile</li>
                   </Link>{" "}
@@ -105,7 +102,7 @@ const Navbar = () => {
 
               {auth ? (
                 <Link onClick={logOut} to={"/signup"}>
-                <li>Logout ({  JSON.parse(auth).name}) </li>
+                  <li>Logout ({JSON.parse(auth).name}) </li>
                 </Link>
               ) : (
                 <>
