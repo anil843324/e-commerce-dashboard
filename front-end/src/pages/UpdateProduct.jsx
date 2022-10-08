@@ -33,8 +33,6 @@ const UpdateProduct = () => {
        setName(result.name)
        setPrice(result.price)
 
-
-
   }
 
  
@@ -42,10 +40,18 @@ const UpdateProduct = () => {
 
    const updateProduct= async()=>{
 
+     let result= await fetch(`http://localhost:8000/product/${id}`,{
+      method:"PUT",
+      body:JSON.stringify({name,price,company,category}),
+      headers:{
+        'Content-Type':"application/json"
+      }
+     })
+     
+      result= await result.json()
 
-
-
-
+    console.log(result);
+    navigate("/")
 
    }
 
