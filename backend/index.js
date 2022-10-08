@@ -85,6 +85,21 @@ app.get("/product/:id" , async (req,res)=>{
 
 })
 
+// update data in product
+
+app.put("/product/:id", async (req,res)=>{
+
+ let result= await Product.updateOne(
+  
+  {_id:req.params.id},
+  
+  {$set:req.body} 
+  
+  )
+ res.send(result)
+
+})
+
 
 app.listen(port, () => {
   console.log(`server is listing ${port}...`);
