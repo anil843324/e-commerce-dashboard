@@ -100,6 +100,38 @@ app.put("/product/:id", async (req,res)=>{
 
 })
 
+// search product for api
+
+app.get("/search/:key", async(req,res)=>{
+
+ 
+   let result=await Product.find(
+
+    {
+      "$or" :[
+        {name:{$regex:req.params.key}},
+        {company:{$regex:req.params.key}},
+        {category:{$regex:req.params.key}},
+        {price:{$regex:req.params.key}}
+      
+      ]
+    }
+   )
+
+   if(result.length>0){
+    res.send(result)
+   }else{
+     res.send({result:"Not Found 😔"})
+   }
+
+   
+
+
+})
+
+
+
+
 
 app.listen(port, () => {
   console.log(`server is listing ${port}...`);
