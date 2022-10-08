@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-
+import {MdDelete} from "react-icons/md"
 const Products = () => {
   const [products, setProducts] = useState([]);
 
@@ -15,6 +15,20 @@ const Products = () => {
 
     setProducts(result);
   };
+
+   const productDelete= async(id)=>{
+
+      let result= await fetch(`http://localhost:8000/product/${id}` ,{
+        method:"DELETE"
+      });
+
+       result= await result.json();
+      if(result){
+         getProducts()
+      }
+
+
+   }
 
   return (
     <div className="w-[97%]">
@@ -59,6 +73,13 @@ const Products = () => {
                       >
                         Company
                       </th>
+                      
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                      >
+                        Operation
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -78,6 +99,10 @@ const Products = () => {
                         </td>
                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                           {ele.company}
+                        </td>
+
+                        <td   className="text-sm cursor-pointer text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                          <MdDelete onClick={ ()=> { productDelete(ele._id)} } size={25}/>
                         </td>
                       </tr>
                     ))}
