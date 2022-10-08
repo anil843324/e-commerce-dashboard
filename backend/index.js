@@ -1,10 +1,17 @@
 const express = require("express");
 
+ const jwt = require("jsonwebtoken");
+ 
+  const jwtKey='e-commerce'
+
 const cors = require("cors");
 
 require("./db/config");
 const User = require("./db/user");
 const Product=require('./db/Product')
+
+
+
 const app = express();
 
 let port = 8000;
@@ -20,7 +27,14 @@ app.post("/register", async (req, res) => {
 
   delete result.password;
 
-  res.send(result);
+  jwt.sign({result}, jwtKey, {expiresIn:"2h"}, (err,token)=>{
+ 
+    if(err){
+      res.send({  result: "something went wrong" });
+    }
+      res.send({result,auth:token});
+ })
+
 });
 
 app.post("/login", async (req, res) => {
@@ -28,7 +42,14 @@ app.post("/login", async (req, res) => {
     let user = await User.findOne(req.body).select("-password");
 
     if (user) {
-      res.send(user);
+       jwt.sign({user}, jwtKey, {expiresIn:"2h"}, (err,token)=>{
+ 
+          if(err){
+            res.send({  result: "something went wrong" });
+          }
+            res.send({user,auth:token});
+       })
+      // res.send(user);
     } else {
       res.send({ result: "No User Found" });
     }
@@ -37,7 +58,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.post("/add-product", async (req, res) => {
+app.post("/add-product", verifyToken, async (req, res) => {
   const product = new Product(req.body);
 
   let result = await product.save();
@@ -47,7 +68,7 @@ app.post("/add-product", async (req, res) => {
 
 // get products from data base
 
-app.get("/products", async (req,res)=>{
+app.get("/products", verifyToken, async (req,res)=>{
 
 
   let products= await Product.find();
@@ -64,7 +85,7 @@ app.get("/products", async (req,res)=>{
 })
 // delete data from products
 
-app.delete("/product/:id", async (req,res)=>{
+app.delete("/product/:id", verifyToken, async (req,res)=>{
 
    const result= await Product.deleteOne({_id:req.params.id})
    res.send(result);
@@ -72,7 +93,7 @@ app.delete("/product/:id", async (req,res)=>{
 
 // get single product from products database
 
-app.get("/product/:id" , async (req,res)=>{
+app.get("/product/:id" , verifyToken, async (req,res)=>{
 
  let result= await Product.findOne({_id:req.params.id});
 
@@ -87,7 +108,7 @@ app.get("/product/:id" , async (req,res)=>{
 
 // update data in product
 
-app.put("/product/:id", async (req,res)=>{
+app.put("/product/:id", verifyToken, async (req,res)=>{
 
  let result= await Product.updateOne(
   
@@ -102,7 +123,7 @@ app.put("/product/:id", async (req,res)=>{
 
 // search product for api
 
-app.get("/search/:key", async(req,res)=>{
+app.get("/search/:key", verifyToken, async(req,res)=>{
 
  
    let result=await Product.find(
@@ -129,6 +150,38 @@ app.get("/search/:key", async(req,res)=>{
 
 })
 
+// jwt token middleware verification
+
+ function verifyToken(req,res,next){
+
+   let token=req.headers['authorization']
+
+
+    if(token){
+
+        token=token.split(" ")[1]
+
+        jwt.verify( token ,jwtKey, (err,valid)=>{
+
+          if(err){
+
+            res.status(401).send( {result:"Please prove valid token "})
+          }else{
+ 
+             next();
+
+          }
+
+        } )
+
+    }else{
+
+         res.status(403).send( {result:"Please add token with header"})
+
+    }
+ 
+
+ }
 
 
 
