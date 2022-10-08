@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import {MdDelete} from "react-icons/md"
+
+import { Link } from "react-router-dom"
+
+ import {BiEdit} from "react-icons/bi"
 const Products = () => {
   const [products, setProducts] = useState([]);
 
@@ -101,8 +105,14 @@ const Products = () => {
                           {ele.company}
                         </td>
 
-                        <td   className="text-sm cursor-pointer text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                          <MdDelete onClick={ ()=> { productDelete(ele._id)} } size={25}/>
+                        <td   className="text-sm flex gap-3  text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                            
+                          <MdDelete className="cursor-pointer" onClick={ ()=> { productDelete(ele._id)} } size={25}/>
+
+                       <Link to={`/update/${ele._id}`}>
+                       <BiEdit className="cursor-pointer" size={25}/>
+                       </Link>
+                          
                         </td>
                       </tr>
                     ))}
