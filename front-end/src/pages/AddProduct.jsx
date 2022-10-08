@@ -12,15 +12,25 @@ const AddProduct = () => {
 
   const navigate = useNavigate();
 
+  const [error,steError]=useState(false)
+
   const addProduct = async () => {
 
-       const userId = JSON.parse(localStorage.getItem('user'))._id
 
-        
-
+       
     if (!price || !company || !category || !name) {
-      alert("please fill the data");
+
+
+        steError(true)
+        return false
+      // alert("please fill the data");
+
+
     } else {
+
+      steError(false)
+      const userId = JSON.parse(localStorage.getItem('user'))._id
+
       let result = await fetch("http://localhost:8000/add-product", {
         method: "POST",
         body: JSON.stringify({ name, price, company, category  ,userId}),
@@ -34,6 +44,7 @@ const AddProduct = () => {
        setCompany("")
        setName("")
        setPrice("")
+      
        alert("product added")
       console.log(result);
     }
@@ -54,6 +65,8 @@ const AddProduct = () => {
               placeholder="Enter product name"
             />
 
+            { error &&  !name && <span className="  text-red-500 block mt-[-20px] ">Enter valid name</span> }
+
             <input
               type="text"
               className="block border border-grey-light w-full p-3 rounded mb-4"
@@ -62,7 +75,7 @@ const AddProduct = () => {
               onChange={(e) => setPrice(e.target.value)}
               value={price}
             />
-
+{ error &&  !price && <span className="  text-red-500 block mt-[-20px] ">Enter valid price</span> }
             <input
               type="text"
               className="block border border-grey-light w-full p-3 rounded mb-4"
@@ -71,6 +84,7 @@ const AddProduct = () => {
               onChange={(e) => setCategory(e.target.value)}
               value={category}
             />
+            { error &&  !category && <span className="  text-red-500 block mt-[-20px] ">Enter valid category</span> }
             <input
               type="text"
               className="block border border-grey-light w-full p-3 rounded mb-4"
@@ -79,6 +93,7 @@ const AddProduct = () => {
               onChange={(e) => setCompany(e.target.value)}
               value={company}
             />
+            { error &&  !company && <span className="  text-red-500 block mt-[-20px] ">Enter valid company</span> }
 
             <button
               type="submit"
