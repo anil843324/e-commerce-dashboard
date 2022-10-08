@@ -2,27 +2,19 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 
 const Products = () => {
+  const [products, setProducts] = useState([]);
 
+  useEffect(() => {
+    getProducts();
+  }, []);
 
-   const [products,setProducts]=useState([])
+  const getProducts = async () => {
+    let result = await fetch("http://localhost:8000/products");
 
+    result = await result.json();
 
-     useEffect(() => {
-       
-        getProducts();
-     }, [])
-
-      const getProducts= async( )=>{
-
-           let result= await fetch('http://localhost:8000/products');
-
-           result= await result.json();
-           
-           setProducts(result);
-      }
-     
-
-
+    setProducts(result);
+  };
 
   return (
     <div className="w-[97%]">
@@ -52,7 +44,7 @@ const Products = () => {
                         scope="col"
                         className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
                       >
-                         Price
+                        Price
                       </th>
                       <th
                         scope="col"
@@ -67,36 +59,28 @@ const Products = () => {
                       >
                         Company
                       </th>
-
                     </tr>
                   </thead>
                   <tbody>
-                  
-                   {
-                    products.map((ele,index)=>(
+                    {products.map((ele, index) => (
                       <tr className="bg-white border-b" key={ele._id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {index+1}
-                      </td>
-                      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                        {ele.name}
-                      </td>
-                      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      ₹ {ele.price}
-                      </td>
-                      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                        {ele.category}
-                      </td>
-                      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                        {ele.company}
-                      </td>
-                    </tr>
-                    ))
-                   }
-                
-
-
-                    
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          {index + 1}
+                        </td>
+                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                          {ele.name}
+                        </td>
+                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                          ₹ {ele.price}
+                        </td>
+                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                          {ele.category}
+                        </td>
+                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                          {ele.company}
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

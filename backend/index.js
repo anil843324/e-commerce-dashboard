@@ -58,11 +58,17 @@ app.get("/products", async (req,res)=>{
 
      res.send({result:"No products found"})
 
-   }
+   } 
 
 
 })
+// delete data from products
 
+app.delete("/product/:id", async (req,res)=>{
+
+   const result= await Product.deleteOne({_id:req.params.id})
+   res.send(result);
+})
 
 
 app.listen(port, () => {
