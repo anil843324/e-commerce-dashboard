@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateProduct = () => {
@@ -14,10 +14,36 @@ const UpdateProduct = () => {
 
   const navigate = useNavigate();
 
+
+  useEffect(() => {
+   
+
+    getProductDetails();
+  }, [])
+  
+  const getProductDetails= async()=>{
+
+
+      let  result=  await fetch(`http://localhost:8000/product/${id}`)
+
+       result= await result.json();
+
+       setCategory(result.category)
+       setCompany(result.company)
+       setName(result.name)
+       setPrice(result.price)
+
+
+
+  }
+
  
 
 
-   const updateProduct=()=>{
+   const updateProduct= async()=>{
+
+
+
 
 
 
