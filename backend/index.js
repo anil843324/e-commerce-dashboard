@@ -70,6 +70,21 @@ app.delete("/product/:id", async (req,res)=>{
    res.send(result);
 })
 
+// get single product from products database
+
+app.get("/product/:id" , async (req,res)=>{
+
+ let result= await Product.findOne({_id:req.params.id});
+
+   if(result){
+     res.send(result)
+   }else{
+     res.send({result:"Not Record Found"})
+   }
+    
+
+})
+
 
 app.listen(port, () => {
   console.log(`server is listing ${port}...`);
