@@ -6,7 +6,10 @@ const express = require("express");
 
 const cors = require("cors");
 
+
+
 require("./db/config");
+
 const User = require("./db/user");
 const Product=require('./db/Product')
 
