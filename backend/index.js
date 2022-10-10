@@ -2,22 +2,19 @@ const express = require("express");
 
  const jwt = require("jsonwebtoken");
  
-  const jwtKey='e-commerce'
+const jwtKey='e-commerce'
 
 const cors = require("cors");
-
-
 
 require("./db/config");
 
 const User = require("./db/user");
 const Product=require('./db/Product')
 
-
-
 const app = express();
 
-let port = 8000;
+// port
+const port = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(cors());
